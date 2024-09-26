@@ -480,7 +480,7 @@ cardapio.metodos = {
 
     },
 
-    // Atualiza o link do botão do WhatsApp
+      // Atualiza o link do botão do WhatsApp
     finalizarPedido: () => {
 
         if (MEU_CARRINHO.length > 0 && MEU_ENDERECO != null) {
@@ -496,7 +496,7 @@ cardapio.metodos = {
 
             $.each(MEU_CARRINHO, (i, e) => {
 
-                itens += `*${e.qntd}x* ${e.name} ....... R$ ${e.price.toFixed(2).replace('.', ',')} \n`;
+                itens += `*${e.qntd}x* ${e.name}...R$ ${e.price.toFixed(2).replace('.', ',')} \n`;
 
                 // último item
                 if ((i + 1) == MEU_CARRINHO.length) {
@@ -504,7 +504,7 @@ cardapio.metodos = {
                     texto = texto.replace(/\${itens}/g, itens);
 
                     // converte a URL
-                    let encode = encodeURI(texto);
+                    let encode = encodeURIComponent(texto);
                     let URL = `https://wa.me/${CELULAR_EMPRESA}?text=${encode}`;
 
                     $("#btnEtapaResumo").attr('href', URL);
