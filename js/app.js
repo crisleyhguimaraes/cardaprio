@@ -369,6 +369,7 @@ cardapio.metodos = {
                         // Atualizar os campos com os valores retornados
                         $("#txtEndereco").val(dados.logradouro);
                         $("#txtBairro").val(dados.bairro);
+                        $("#txtCidade").val(dados.localidade);
                         $("#txtNumero").focus();
 
                     }
@@ -399,6 +400,7 @@ cardapio.metodos = {
         let cep = $("#txtCEP").val().trim();
         let endereco = $("#txtEndereco").val().trim();
         let bairro = $("#txtBairro").val().trim();
+        let cidade = $("#txtCidade").val().trim();
         let numero = $("#txtNumero").val().trim();
         let complemento = $("#txtComplemento").val().trim();
 
@@ -420,6 +422,12 @@ cardapio.metodos = {
             return;
         }
 
+        if (cidade.length <= 0) {
+            cardapio.metodos.mensagem('Informe a Cidade, por favor.');
+            $("#txtCidade").focus();
+            return;
+        }
+
         if (numero.length <= 0) {
             cardapio.metodos.mensagem('Informe o Número, por favor.');
             $("#txtNumero").focus();
@@ -430,6 +438,7 @@ cardapio.metodos = {
             cep: cep,
             endereco: endereco,
             bairro: bairro,
+            cidade: cidade,
             numero: numero,
             complemento: complemento
         }
@@ -456,7 +465,7 @@ cardapio.metodos = {
         });
 
         $("#resumoEndereco").html(`${MEU_ENDERECO.endereco}, ${MEU_ENDERECO.numero}, ${MEU_ENDERECO.bairro}`);
-        $("#cidadeEndereco").html(`${MEU_ENDERECO.cep}, ${MEU_ENDERECO.complemento}`);
+        $("#cidadeEndereco").html(`${MEU_ENDERECO.cidade} - ${MEU_ENDERECO.cep}, ${MEU_ENDERECO.complemento}`);
 
         cardapio.metodos.finalizarPedido();
 
@@ -470,9 +479,9 @@ cardapio.metodos = {
             var texto = 'Olá! gostaria de fazer um pedido:';
             texto += `\n*Itens do pedido:*\n\n\${itens}`;
             texto += '\n*Endereço de entrega:*';
-            texto += `\n${MEU_ENDERECO.endereco}, nº ${MEU_ENDERECO.numero}, Bairro: ${MEU_ENDERECO.bairro}`;
-            texto += `\nCEP: ${MEU_ENDERECO.cep}`;
-            texto += `\nComplemento: ${MEU_ENDERECO.complemento}`;
+            texto += `\n${MEU_ENDERECO.endereco}, nº ${MEU_ENDERECO.numero}`;
+            texto += `\n${MEU_ENDERECO.cidade}, Bairro: ${MEU_ENDERECO.bairro}`;
+            texto += `\nCEP: ${MEU_ENDERECO.cep}, Complemento: ${MEU_ENDERECO.complemento}`;
             texto += `\n\n*Total (retirada): R$ ${(VALOR_CARRINHO).toFixed(2).replace('.', ',')}*`;
             texto += `\n\n*Total (com entrega): R$ ${(VALOR_CARRINHO + VALOR_ENTREGA).toFixed(2).replace('.', ',')}*`;
 
