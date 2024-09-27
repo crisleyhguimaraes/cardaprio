@@ -370,7 +370,6 @@ cardapio.metodos = {
                         $("#txtEndereco").val(dados.logradouro);
                         $("#txtBairro").val(dados.bairro);
                         $("#txtCidade").val(dados.localidade);
-                        $("#ddlUf").val(dados.uf);
                         $("#txtNumero").focus();
 
                     }
@@ -402,7 +401,6 @@ cardapio.metodos = {
         let endereco = $("#txtEndereco").val().trim();
         let bairro = $("#txtBairro").val().trim();
         let cidade = $("#txtCidade").val().trim();
-        let uf = $("#ddlUf").val().trim();
         let numero = $("#txtNumero").val().trim();
         let complemento = $("#txtComplemento").val().trim();
 
@@ -430,12 +428,6 @@ cardapio.metodos = {
             return;
         }
 
-        if (uf == "-1") {
-            cardapio.metodos.mensagem('Informe a UF, por favor.');
-            $("#ddlUf").focus();
-            return;
-        }
-
         if (numero.length <= 0) {
             cardapio.metodos.mensagem('Informe o Número, por favor.');
             $("#txtNumero").focus();
@@ -447,7 +439,6 @@ cardapio.metodos = {
             endereco: endereco,
             bairro: bairro,
             cidade: cidade,
-            uf: uf,
             numero: numero,
             complemento: complemento
         }
@@ -474,13 +465,13 @@ cardapio.metodos = {
         });
 
         $("#resumoEndereco").html(`${MEU_ENDERECO.endereco}, ${MEU_ENDERECO.numero}, ${MEU_ENDERECO.bairro}`);
-        $("#cidadeEndereco").html(`${MEU_ENDERECO.cidade}-${MEU_ENDERECO.uf} / ${MEU_ENDERECO.cep} ${MEU_ENDERECO.complemento}`);
+        $("#cidadeEndereco").html(`${MEU_ENDERECO.cidade} - ${MEU_ENDERECO.cep} ${MEU_ENDERECO.complemento}`);
 
         cardapio.metodos.finalizarPedido();
 
     },
 
-      // Atualiza o link do botão do WhatsApp
+    // Atualiza o link do botão do WhatsApp
     finalizarPedido: () => {
 
         if (MEU_CARRINHO.length > 0 && MEU_ENDERECO != null) {
@@ -488,8 +479,8 @@ cardapio.metodos = {
             var texto = 'Olá! gostaria de fazer um pedido:';
             texto += `\n*Itens do pedido:*\n\n\${itens}`;
             texto += '\n*Endereço de entrega:*';
-            texto += `\n${MEU_ENDERECO.endereco}, ${MEU_ENDERECO.numero}, ${MEU_ENDERECO.bairro}`;
-            texto += `\n${MEU_ENDERECO.cidade}-${MEU_ENDERECO.uf} / ${MEU_ENDERECO.cep} ${MEU_ENDERECO.complemento}`;
+            texto += `\n${MEU_ENDERECO.endereco}, Nº ${MEU_ENDERECO.numero}, ${MEU_ENDERECO.bairro}`;
+            texto += `\n${MEU_ENDERECO.cidade} - ${MEU_ENDERECO.cep} - ${MEU_ENDERECO.complemento}`;
             texto += `\n\n*Total (com entrega): R$ ${(VALOR_CARRINHO + VALOR_ENTREGA).toFixed(2).replace('.', ',')}*`;
 
             var itens = '';
